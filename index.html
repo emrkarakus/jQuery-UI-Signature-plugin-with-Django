@@ -7,10 +7,10 @@
 </style>
 {% endblock css %}
 {%block javascript %}
-<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'vendor/jquery/jquery-ui.min.js' %}"></script> <!-- IMZAYI BURADAN ATIYOR --> 
-<script type="text/javascript" src="{% static 'js/signature/jquery-ui.touch-punch.js' %}"></script> <!-- TOUCH PUNCH PLUGIN(dokumatik ekranlar icin) -->
-<script src="{% static 'js/signature/jquery.signature.js' %}"></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.min.js' %}"></script> <!-- IMZAYI BURADAN ATIYOR --> 
+<script type="text/javascript" src="{% static 'js/jquery-ui.touch-punch.js' %}"></script> <!-- TOUCH PUNCH PLUGIN(dokumatik ekranlar icin) -->
+<script src="{% static 'js/jquery.signature.js' %}"></script>
 <script>
 $(function() {
 	var sig = $('#sig').signature();
