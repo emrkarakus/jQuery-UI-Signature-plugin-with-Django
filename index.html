@@ -1,0 +1,79 @@
+{% extends 'home/base.html' %}
+{% load static %} {% block css %}
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/south-street/jquery-ui.css" rel="stylesheet">
+<link href="{% static 'css/jquery.signature.css' %}" rel="stylesheet">
+<style>
+.kbw-signature { width: 400px; height: 200px; }
+</style>
+{% endblock css %}
+{%block javascript %}
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/jquery/jquery-ui.min.js' %}"></script> <!-- IMZAYI BURADAN ATIYOR --> 
+<script type="text/javascript" src="{% static 'js/signature/jquery-ui.touch-punch.js' %}"></script> <!-- TOUCH PUNCH PLUGIN(dokumatik ekranlar icin) -->
+<script src="{% static 'js/signature/jquery.signature.js' %}"></script>
+<script>
+$(function() {
+	var sig = $('#sig').signature();
+	$('#disable').click(function() {
+		var disable = $(this).text() === 'Disable';
+		$(this).text(disable ? 'Enable' : 'Disable');
+		sig.signature(disable ? 'disable' : 'enable');
+	});
+	$('#clear').click(function() {
+		sig.signature('clear');
+	});
+	$('#json').click(function() {
+		alert(sig.signature('toJSON'));
+		imzadata = sig.signature('toJSON');
+		console.log(imzadata);
+	});
+	$('#svg').click(function() {
+		alert(sig.signature('toSVG'));
+	});
+});
+
+var csrf = 	$("input[name=csrfmiddlewaretoken]").val();
+  
+$(document).ready(function(){
+	$(".btn").click(function(){
+		$.ajax({
+			url: '',
+			type: 'get',
+			data: {
+				button_text: imzadata
+			},
+			success: function(response){
+				$(".btn").text(response.seconds)
+			}
+		});
+	});
+
+	$(".btn").click(function(){
+		$.ajax({
+			url:'',
+			type:'post',
+			data: {
+				text: imzadata,
+				csrfmiddlewaretoken: csrf
+			},
+			success: function(response){
+				$(".btn").text(response.seconds)
+			}
+		})
+	});
+});
+</script>
+{% endblock javascript %}
+</head>
+{% block content %}
+<body>
+<div id="sig"></div>
+<p style="clear: both;">
+	<button id="disable" class="btn btn-outline-primary">Kapat</button>
+	<button id="clear" class="btn btn-outline-danger">Temizle</button>
+	{% csrf_token %}
+	<button id="json" name="json" type="submit" class="btn btn-outline-success">To JSON</button>
+</p>
+</body>
+{% endblock content %}
+</html>
